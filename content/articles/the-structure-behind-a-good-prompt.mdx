@@ -1,0 +1,46 @@
+---
+title: "The structure behind a good prompt"
+excerpt: "A reliable prompt has four parts, in this order: role, context, task, constraints. Miss one and the output drifts."
+date: "2025-01-22"
+author: "Cole Ashford"
+---
+
+A prompt is a specification. Treat it like one.
+
+When output is disappointing, people assume the model is limited. Usually the specification is. A good prompt has four parts, always in the same order, each answering a different question.
+
+## 1. Role — who is doing the work?
+
+The model is a generalist. You make it a specialist by naming the expertise you want. "You are a senior copy editor at a financial publication." "You are a pricing analyst with ten years of B2B SaaS experience."
+
+Role is not flattery. It narrows the vocabulary, the assumptions, and the style. It moves the output from the center of the distribution toward the corner you want.
+
+## 2. Context — what does it need to know?
+
+This is the step people skip. Paste the background. The audience. The product. The constraints you already have. The drafts you rejected and why.
+
+Context is the single biggest lever on output quality, and it costs nothing to add. The model cannot infer what you have not said.
+
+## 3. Task — what should come out the other side?
+
+Be specific about the artifact. Not "help me with X." *Produce* a three-part outline. *Write* a 200-word introduction. *Identify* the top three objections.
+
+Verbs and quantities. That is the whole game.
+
+## 4. Constraints — what is off-limits, and what must be true?
+
+Word count. Tone. Things to avoid. Things that must appear. Format of the output (bullets, table, prose). Reading level.
+
+Constraints shrink the output space. A shrunken output space is almost always a better output.
+
+## The order matters
+
+Role, then context, then task, then constraints. The reason is that each step narrows the next. The role narrows the voice. The context narrows the content. The task narrows the shape. The constraints narrow the execution.
+
+Swap the order and the model has to hold too many things open at once. You get mush.
+
+## The test
+
+Before you send a prompt, read it back and ask: could two reasonable people produce wildly different outputs from this? If yes, you have not specified enough. Keep cutting ambiguity until the answer is no.
+
+That is the whole structure. It is not clever. It is just disciplined.
