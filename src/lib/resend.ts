@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { tokenForEmail } from "@/app/api/unsubscribe/route";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -7,6 +8,10 @@ const FROM = process.env.RESEND_FROM_EMAIL || "Cole Ashford <hello@alreadyahead.
 export async function sendWelcomeEmail(to: string) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://alreadyahead.net";
   const pricingUrl = `${siteUrl}/pricing`;
+
+  const email = to.toLowerCase().trim();
+  const token = tokenForEmail(email);
+  const unsubUrl = `${siteUrl}/api/unsubscribe?email=${encodeURIComponent(email)}&token=${token}`;
 
   const text = `You're in.
 
@@ -19,7 +24,11 @@ The real advantage comes from structuring your thinking clearly and using AI as 
 If you want to go deeper into that, you can get full access here:
 ${pricingUrl}
 
-— Cole`;
+— Cole
+
+---
+You're receiving this because you subscribed at alreadyahead.net.
+Unsubscribe: ${unsubUrl}`;
 
   const html = `<!doctype html>
 <html>
@@ -39,13 +48,17 @@ ${pricingUrl}
               <p style="margin:0 0 24px 0;">The real advantage comes from structuring your thinking clearly and using AI as a system.</p>
               <p style="margin:0 0 28px 0;">If you want to go deeper into that, you can get full access here:</p>
               <p style="margin:0 0 32px 0;">
-                <a href="${pricingUrl}" style="display:inline-block;background:#111;color:#FAFAF7;padding:12px 20px;text-decoration:none;font-weight:600;">Get the Already Ahead System →</a>
+                <a href="${pricingUrl}" style="display:inline-block;background:#111;color:#FAFAF7;padding:12px 20px;text-decoration:none;font-weight:600;">Get the Already Ahead System &rarr;</a>
               </p>
-              <p style="margin:0;color:#6B6B66;">— Cole</p>
+              <p style="margin:0;color:#6B6B66;">&mdash; Cole</p>
             </td></tr>
-            <tr><td style="padding-top:40px;border-top:1px solid #E5E2DA;margin-top:40px;">
-              <p style="font-size:12px;color:#6B6B66;margin:24px 0 0 0;">
+            <tr><td style="padding-top:40px;">
+              <hr style="border:0;border-top:1px solid #E5E2DA;margin:0 0 24px 0;">
+              <p style="font-size:12px;color:#6B6B66;margin:0 0 8px 0;">
                 You're receiving this because you subscribed at alreadyahead.net.
+              </p>
+              <p style="font-size:12px;color:#6B6B66;margin:0;">
+                <a href="${unsubUrl}" style="color:#6B6B66;text-decoration:underline;">Unsubscribe</a>
               </p>
             </td></tr>
           </table>
@@ -61,5 +74,10 @@ ${pricingUrl}
     subject: "Start here",
     text,
     html,
+    headers: {
+      // RFC 8058 — enables Gmail/Yahoo's one-click unsubscribe button in the inbox
+      "List-Unsubscribe": `<${unsubUrl}>`,
+      "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+    },
   });
 }
