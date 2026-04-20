@@ -23,6 +23,13 @@ export default function ThankYouPage() {
               You're in. Start here.
             </h1>
 
+            <div className="mt-6 border border-rule bg-card/50 p-4 text-sm text-ink/80 leading-relaxed">
+              <strong className="text-ink">Check your inbox.</strong> A welcome email from{" "}
+              <span className="font-mono text-[13px]">hello@alreadyahead.net</span> is on its
+              way. If you don't see it in a minute or two, check your spam or promotions
+              folder — and mark it "Not spam" so future issues land properly.
+            </div>
+
             <div className="mt-10 space-y-5 text-lg leading-relaxed text-ink/85">
               <p className="dropcap">
                 Most people use AI like a search engine. They ask a question, get an answer, and
