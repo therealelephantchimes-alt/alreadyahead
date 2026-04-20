@@ -173,7 +173,21 @@ export default async function HomePage() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
-            <div>
+            <div className="flex flex-col">
+              
+                href="https://www.amazon.com/Already-Ahead-Actually-Starting-Today-ebook/dp/B0GX36YZ68"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block mb-6 group"
+                aria-label="Already Ahead on Amazon"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/books/already-ahead.jpg"
+                  alt="Already Ahead book cover"
+                  className="w-full max-w-[280px] shadow-xl group-hover:shadow-2xl transition-shadow"
+                />
+              </a>
               <p className="font-display italic text-accent mb-1">Book I</p>
               <h3 className="font-display text-2xl md:text-3xl font-medium tracking-tight mb-3">
                 Already Ahead
@@ -182,8 +196,8 @@ export default async function HomePage() {
                 A clear introduction to what AI is, what it is not, and how to start using it
                 immediately.
               </p>
-              <a
-                href="https://www.amazon.com/dp/PLACEHOLDER_ASIN_1"
+              
+                href="https://www.amazon.com/Already-Ahead-Actually-Starting-Today-ebook/dp/B0GX36YZ68"
                 className="link-underline text-sm"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -191,7 +205,21 @@ export default async function HomePage() {
                 Available on Amazon →
               </a>
             </div>
-            <div>
+            <div className="flex flex-col">
+              
+                href="https://www.amazon.com/Prompt-Product-Think-Systems-Already-ebook/dp/B0GX2XL7LG"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block mb-6 group"
+                aria-label="The Prompt Is the Product on Amazon"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/books/the-prompt-is-the-product.jpg"
+                  alt="The Prompt Is the Product book cover"
+                  className="w-full max-w-[280px] shadow-xl group-hover:shadow-2xl transition-shadow"
+                />
+              </a>
               <p className="font-display italic text-accent mb-1">Book II</p>
               <h3 className="font-display text-2xl md:text-3xl font-medium tracking-tight mb-3">
                 The Prompt Is the Product
@@ -200,8 +228,8 @@ export default async function HomePage() {
                 How to structure prompts, use multiple models together, and build systems that
                 produce consistent results.
               </p>
-              <a
-                href="https://www.amazon.com/dp/PLACEHOLDER_ASIN_2"
+              
+                href="https://www.amazon.com/Prompt-Product-Think-Systems-Already-ebook/dp/B0GX2XL7LG"
                 className="link-underline text-sm"
                 target="_blank"
                 rel="noopener noreferrer"
