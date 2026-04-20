@@ -9,6 +9,36 @@ export const dynamic = "force-dynamic";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
+/**
+ * Safely convert a Unix timestamp (seconds) to an ISO string.
+ * Returns null if the input is missing, zero, or invalid.
+ * Newer Stripe API versions put current_period_end on subscription items
+ * rather than the top-level subscription — this function is defensive
+ * against all of that.
+ */
+function safeIsoFromUnix(seconds: number | null | undefined): string | null {
+  if (!seconds || typeof seconds !== "number" || isNaN(seconds)) return null;
+  try {
+    const d = new Date(seconds * 1000);
+    if (isNaN(d.getTime())) return null;
+    return d.toISOString();
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Extract current_period_end from a subscription, handling both the classic
+ * top-level field and the newer per-item field.
+ */
+function periodEndFromSub(sub: Stripe.Subscription): number | null {
+  // @ts-ignore — older API versions had this at top level
+  const topLevel = (sub as any).current_period_end;
+  if (topLevel) return topLevel;
+  const itemEnd = sub.items?.data?.[0]?.current_period_end;
+  return itemEnd ?? null;
+}
+
 export async function POST(request: NextRequest) {
   const sig = request.headers.get("stripe-signature");
   const raw = await request.text();
@@ -69,7 +99,6 @@ export async function POST(request: NextRequest) {
         break;
       }
       default:
-        // Ignore events we don't handle
         break;
     }
   } catch (err: any) {
@@ -96,10 +125,8 @@ async function handleCheckoutCompleted(
     return;
   }
 
-  // Find or create a user for this email
   let userId = supabaseUserId || null;
   if (!userId) {
-    // Look up in public.users by email
     const { data: existingUser } = await admin
       .from("users")
       .select("id")
@@ -108,7 +135,6 @@ async function handleCheckoutCompleted(
     if (existingUser?.[0]) {
       userId = existingUser[0].id;
     } else {
-      // Create an auth user so they can sign in via magic link with the same email
       const { data: newAuthUser, error: authCreateError } = await admin.auth.admin.createUser({
         email: email.toLowerCase(),
         email_confirm: true,
@@ -121,7 +147,6 @@ async function handleCheckoutCompleted(
     }
   }
 
-  // Fetch the full subscription to get the price -> tier mapping
   const sub = await stripe.subscriptions.retrieve(subscriptionId);
   const priceId = sub.items.data[0]?.price?.id;
   const tier = priceId ? tierForPriceId(priceId) : null;
@@ -137,19 +162,17 @@ async function handleCheckoutCompleted(
       stripe_subscription_id: sub.id,
       tier,
       status: sub.status,
-      current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
+      current_period_end: safeIsoFromUnix(periodEndFromSub(sub)),
       updated_at: new Date().toISOString(),
     },
     { onConflict: "stripe_subscription_id" },
   );
 
-  // Mark any matching email_capture as converted
   await admin
     .from("email_captures")
     .update({ converted_to_user: true })
     .eq("email", email.toLowerCase());
 
-  // Server-side analytics
   try {
     const ph = posthogServer();
     if (ph) {
@@ -171,7 +194,6 @@ async function upsertSubscriptionFromStripe(
   const tier = priceId ? tierForPriceId(priceId) : null;
   if (!tier) return;
 
-  // Find the user_id via existing row (if we've seen this subscription before)
   const { data: existing } = await admin
     .from("subscriptions")
     .select("user_id")
@@ -179,8 +201,8 @@ async function upsertSubscriptionFromStripe(
     .limit(1);
 
   if (!existing?.[0]) {
-    // First time we see this sub — webhook ordering may have put us ahead
-    // of checkout.session.completed. Skip for now; the other handler will fill it in.
+    // Webhook ordering may have put us ahead of checkout.session.completed.
+    // Skip — that handler will fill it in.
     return;
   }
 
@@ -189,7 +211,7 @@ async function upsertSubscriptionFromStripe(
     .update({
       tier,
       status: sub.status,
-      current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
+      current_period_end: safeIsoFromUnix(periodEndFromSub(sub)),
       updated_at: new Date().toISOString(),
     })
     .eq("stripe_subscription_id", sub.id);
