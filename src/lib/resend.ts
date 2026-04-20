@@ -1,5 +1,5 @@
 import { Resend } from "resend";
-import { tokenForEmail } from "@/app/api/unsubscribe/route";
+import { tokenForEmail } from "@/lib/tokens";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
