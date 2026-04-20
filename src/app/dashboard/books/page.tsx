@@ -12,6 +12,7 @@ const BOOKS = [
     slug: "already-ahead",
     title: "Already Ahead",
     subtitle: "Book I",
+    cover: "/books/already-ahead.jpg",
     description:
       "A clear introduction to what AI is, what it is not, and how to start using it immediately.",
   },
@@ -19,6 +20,7 @@ const BOOKS = [
     slug: "the-prompt-is-the-product",
     title: "The Prompt Is the Product",
     subtitle: "Book II",
+    cover: "/books/the-prompt-is-the-product.jpg",
     description:
       "How to structure prompts, use multiple models together, and build systems that produce consistent results.",
   },
@@ -57,14 +59,15 @@ export default async function BooksPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {BOOKS.map((book) => (
           <article key={book.slug} className="border border-rule bg-paper p-6 md:p-7 flex flex-col">
-            <div className="aspect-[3/4] bg-ink mb-5 flex items-center justify-center">
-              <div className="text-center text-paper p-6">
-                <p className="font-display italic text-accent text-sm mb-2">{book.subtitle}</p>
-                <p className="font-display text-xl md:text-2xl font-medium tracking-tight">
-                  {book.title}
-                </p>
-              </div>
+            <div className="aspect-[3/4] mb-5 overflow-hidden bg-ink">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={book.cover}
+                alt={`${book.title} cover`}
+                className="w-full h-full object-cover"
+              />
             </div>
+            <p className="font-display italic text-accent text-sm mb-1">{book.subtitle}</p>
             <h2 className="font-display text-xl md:text-2xl font-medium tracking-tight mb-2">
               {book.title}
             </h2>
