@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { Tier } from "@/lib/types";
 import { posthog } from "./PostHogProvider";
@@ -11,11 +12,8 @@ interface PricingCardProps {
   price: number;
   features: string[];
   recommended?: boolean;
-  // Optional: existing user's current tier (null if signed out or no sub)
   currentTier?: Tier | null;
-  // Whether the subscription is active
   hasActiveSub?: boolean;
-  // Whether to show the inline upgrade toggle on Tier 1
   showUpgradeToggle?: boolean;
 }
 
@@ -116,7 +114,7 @@ export function PricingCard({
         ))}
       </ul>
 
-      {/* Inline Tier 1 -> Tier 2 upgrade toggle */}
+      {/* Inline Tier 1 -> Tier 2 upgrade toggle (signed-out flow only) */}
       {showUpgradeToggle && tier === "tier_1" && !hasActiveSub && (
         <label className="flex items-start gap-3 border-t border-rule pt-4 mb-4 cursor-pointer">
           <input
@@ -150,9 +148,9 @@ export function PricingCard({
             </button>
           </>
         ) : canUpgradeHere ? (
-          <button onClick={onCheckout} disabled={isPending} className="btn-primary w-full">
-            {isPending ? "Loading…" : "Upgrade to System+"}
-          </button>
+          <Link href="/dashboard/upgrade" className="btn-primary w-full text-center">
+            Upgrade to System+
+          </Link>
         ) : hasActiveSub && currentTier === "tier_2" && tier === "tier_1" ? (
           <button disabled className="btn-secondary w-full opacity-50 cursor-not-allowed">
             Included in your plan
