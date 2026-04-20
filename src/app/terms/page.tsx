@@ -17,7 +17,7 @@ export default function TermsPage() {
           <h1 className="font-display text-display-lg font-medium tracking-tight mb-2">
             Terms of Service
           </h1>
-          <p className="text-sm text-muted mb-10">Last updated: January 2025</p>
+          <p className="text-sm text-muted mb-10">Last updated: April 2026</p>
 
           <p>
             These terms govern your use of alreadyahead.net. By creating an account or
@@ -29,7 +29,7 @@ export default function TermsPage() {
             Already Ahead provides written content, prompt systems, workflows, and case studies
             designed to help you use AI tools more effectively. The service is provided as-is.
             We do our best to keep it working and accurate, but we make no warranty about
-            specific outcomes you'll achieve by using it.
+            specific outcomes you&apos;ll achieve by using it.
           </p>
 
           <h2>Subscriptions and billing</h2>
@@ -52,7 +52,7 @@ export default function TermsPage() {
 
           <h2>Acceptable use</h2>
           <p>
-            Don't share your account. Don't scrape the site. Don't use the service to generate
+            Don&apos;t share your account. Don&apos;t scrape the site. Don&apos;t use the service to generate
             or distribute content that is illegal, defamatory, or harmful. We reserve the right
             to suspend accounts that violate these terms.
           </p>
@@ -81,12 +81,6 @@ export default function TermsPage() {
           <p>
             Questions go to{" "}
             <a href="mailto:hello@alreadyahead.net">hello@alreadyahead.net</a>.
-          </p>
-
-          <hr className="my-10 border-rule" />
-          <p className="text-sm text-muted italic">
-            This is a baseline set of terms. Before launch, have counsel review it and adapt it
-            to your jurisdiction and business structure.
           </p>
         </div>
       </div>

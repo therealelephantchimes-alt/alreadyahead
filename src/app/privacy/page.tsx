@@ -17,10 +17,10 @@ export default function PrivacyPage() {
           <h1 className="font-display text-display-lg font-medium tracking-tight mb-2">
             Privacy Policy
           </h1>
-          <p className="text-sm text-muted mb-10">Last updated: January 2025</p>
+          <p className="text-sm text-muted mb-10">Last updated: April 2026</p>
 
           <p>
-            This policy describes what information Already Ahead (“we,” “us”) collects, how we
+            This policy describes what information Already Ahead (&ldquo;we,&rdquo; &ldquo;us&rdquo;) collects, how we
             use it, and the choices you have. If something here is unclear, email{" "}
             <a href="mailto:hello@alreadyahead.net">hello@alreadyahead.net</a> and we will answer.
           </p>
@@ -76,12 +76,6 @@ export default function PrivacyPage() {
           <p>
             Questions about this policy go to{" "}
             <a href="mailto:hello@alreadyahead.net">hello@alreadyahead.net</a>.
-          </p>
-
-          <hr className="my-10 border-rule" />
-          <p className="text-sm text-muted italic">
-            This is a baseline policy. Before launch, have counsel review it against your
-            jurisdiction's requirements (GDPR, CCPA, etc.) and update as needed.
           </p>
         </div>
       </div>
