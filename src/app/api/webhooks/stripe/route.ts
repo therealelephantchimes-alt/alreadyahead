@@ -35,7 +35,7 @@ function periodEndFromSub(sub: Stripe.Subscription): number | null {
   // @ts-ignore — older API versions had this at top level
   const topLevel = (sub as any).current_period_end;
   if (topLevel) return topLevel;
-  const itemEnd = sub.items?.data?.[0]?.current_period_end;
+  const itemEnd = (sub.items?.data?.[0] as any)?.current_period_end;
   return itemEnd ?? null;
 }
 
