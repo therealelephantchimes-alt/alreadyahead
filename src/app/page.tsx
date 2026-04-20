@@ -119,9 +119,17 @@ export default async function HomePage() {
       <section id="books" className="border-b border-rule">
         <div className="max-w-page mx-auto px-5 md:px-8 py-16 md:py-24">
           <p className="text-[11px] uppercase tracking-[0.2em] text-muted font-medium mb-3">The books</p>
-          <h2 className="font-display text-display-lg font-medium tracking-tight max-w-3xl mb-12">
+          <h2 className="font-display text-display-lg font-medium tracking-tight max-w-3xl mb-6">
             Two books. One throughline: structure changes output.
           </h2>
+
+          <div className="mb-10 inline-flex items-start gap-3 bg-accent-soft border border-accent/30 px-4 py-3 text-sm max-w-2xl">
+            <span className="text-accent mt-0.5 shrink-0" aria-hidden>★</span>
+            <span>
+              <strong>Both books are included</strong> with any subscription — no need to buy them separately.{" "}
+              <Link href="/pricing" className="link-underline">See pricing →</Link>
+            </span>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
             <div className="flex flex-col">

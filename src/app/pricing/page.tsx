@@ -52,7 +52,7 @@ export default async function PricingPage() {
               hasActiveSub={hasActiveSub}
               showUpgradeToggle={!hasActiveSub}
               features={[
-                "Both books (PDF download)",
+                "Both books (PDF download) — full text, not excerpts",
                 "Core prompt systems (10+ structured frameworks)",
                 "Foundational workflows you can reuse immediately",
                 "Member dashboard",
